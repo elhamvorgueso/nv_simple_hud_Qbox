@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/60ed460a-facf-4ce2-bf46-80769257220c)
+
+
 **nv_simple_hud** is a simple and clean Heads-Up Display (HUD) system designed specifically for the ESX Framework in FiveM. This resource allows players to easily view their essential statistics such as health, armor, hunger, thirst, speed, and ammunition. 
 
 ## Features
