@@ -20,6 +20,121 @@ body{
 .stats .item.weapon{
 	background-color: #5b4c2be0;
 }
+.player-id {
+    position: absolute;
+    top: 35px; /* misma altura */
+    right: 140px; /* distancia desde la derecha del viewport */
+    font-family: 'Mulish', sans-serif;
+    font-size: 1.0vw;
+    font-weight: 700;
+    color: #ffffff;
+    background: #2a313db9;
+    padding: 0.4vw 1vw;
+    border-radius: 0.2vw;
+    z-index: 9999;
+    box-shadow: 0px 0px 1vw #00d0ff50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.players-online {
+    position: absolute;
+    top: 35px; /* misma altura */
+    right: 10px; /* ajusta para que quede más cerca del player-id */
+    font-family: 'Mulish', sans-serif;
+    font-size: 1.0vw;
+    font-weight: 700;
+    color: #ffffff;
+    background: #2a313db9;
+    padding: 0.4vw 1vw;
+    border-radius: 0.2vw;
+    z-index: 9999;
+    box-shadow: 0px 0px 1vw #00d0ff50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+}
+.player-money {
+	position: absolute;
+	top: 80px; /* ajusta según quieras, por ejemplo, debajo del ID */
+	right: 10px;
+	font-family: 'Mulish', sans-serif;
+	font-size: 1.0vw;
+	font-weight: 700;
+	color: #ffffff;
+	background: #2a313db9;
+	padding: 0.4vw 1vw;
+	border-radius: 0.2vw;
+	z-index: 9999;
+	box-shadow: 0px 0px 1vw #00d0ff50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease-in-out;
+}
+
+.player-bank {
+	position: absolute;
+	top: 125px; /* ajusta según quieras, por ejemplo, debajo del ID */
+	right: 10px;
+	font-family: 'Mulish', sans-serif;
+	font-size: 1.0vw;
+	font-weight: 700;
+	color: #ffffff;
+	background: #2a313db9;
+	padding: 0.4vw 1vw;
+	border-radius: 0.2vw;
+	z-index: 9999;
+	box-shadow: 0px 0px 1vw #00d0ff50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.3s ease-in-out;
+}
+
+.player-job {
+    position: absolute;
+	top: 158px;
+    right: 10px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 1.0vw;
+    font-weight: 700;
+    color: #ffffff;
+    background: #2a313db9;
+    padding: 0.4vw 1vw;
+    border-radius: 0.2vw;
+    z-index: 9999;
+    box-shadow: 0px 0px 1vw #00d0ff50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    margin-top: 1vh; /* ajusta si quieres separar los elementos */
+}
+
+.player-job-grade {
+    position: absolute;
+	top: 202px;
+    right: 10px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 1.0vw;
+    font-weight: 700;
+    color: #ffffff;
+    background: #2a313db9;
+    padding: 0.4vw 1vw;
+    border-radius: 0.2vw;
+    z-index: 9999;
+    box-shadow: 0px 0px 1vw #00d0ff50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease-in-out;
+    margin-top: 1vh; /* ajusta si quieres separar los elementos */
+}
+
 .stats .item.weapon .fill{
 	background-color: #e37b22;
 }
@@ -37,7 +152,7 @@ body{
 	position: absolute;
 	font-weight: 700;
 	color: #fff;
-	font-size: 0.6vw;
+	font-size: 0.9vw;
 	margin-bottom: -1vw;
 	width: 2.2vw;
 	text-align: center;
@@ -119,7 +234,7 @@ body{
 }
 .speedometer .item span{
     font-weight: 700;
-    font-size: 0.6vw;
+    font-size: 1.0vw;
     text-shadow: 0px 0px 6px #00000090;
     display: flex;
 }
