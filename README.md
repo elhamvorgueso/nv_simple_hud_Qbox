@@ -14,6 +14,7 @@
 ## Requirements
 
 - **QBOX Framework** (this HUD is only compatible with QBOX and will not function without it).
+- **ox_Fuel** ( this HUD is only compatible with ox_Fuel - You can adapt another fuel system if you wish.).
 
 ## License
 
