@@ -1,27 +1,40 @@
-
 local inCar = false
 local before = {}
 local isReady = nil
+
+local QBCore = exports['qb-core']:GetCoreObject()
+
 Citizen.CreateThread(function()
     while true do
         local player = PlayerPedId()
         local health = GetEntityHealth(player) - 100
         local armour = GetPedArmour(player)
-        TriggerEvent('esx_status:getStatus', 'hunger', function(status) food = status.val / 10000 end)
-        TriggerEvent('esx_status:getStatus', 'thirst', function(status) water = status.val / 10000 end)
+        local PlayerData = QBCore.Functions.GetPlayerData()
+        local hunger = PlayerData.metadata["hunger"] or 100
+        local thirst = PlayerData.metadata["thirst"] or 100
+        local food = hunger / 100
+        local water = thirst / 100
+        
         if not food or not water then
             SendNUIMessage({status = 'visible', data = false})
             goto continue
         end
+        
         if not isReady then
             isReady = true
         end
+        
         if health < 0 then health = 0 end
-        SendNUIMessage({status = 'info', data = {health=health,armour=armour,food=food,water=water}})
+        SendNUIMessage({status = 'info', data = {health = health, armour = armour, food = food, water = water}})
+        
         ::continue::
         Citizen.Wait(3000)
     end
 end)
+
+RegisterNetEvent('QBCore:Player:SetPlayerData', function(PlayerData)
+end)
+
 local wait = 1000
 Citizen.CreateThread(function()
     while true do
@@ -31,6 +44,7 @@ Citizen.CreateThread(function()
             wait = 1000
             goto endLoop
         end
+        
         do
             local pause = IsPauseMenuActive()
             if pause ~= before.pause then
@@ -41,19 +55,22 @@ Citizen.CreateThread(function()
                 end
                 before.pause = pause
             end
+            
             local player = PlayerPedId()
             local isPedInVehicle = IsPedInAnyVehicle(player)
+            
             if isPedInVehicle then
                 local vehicle = GetVehiclePedIsIn(player)
                 if GetPedInVehicleSeat(vehicle, -1) == player then
                     wait = 200
                     inCar = true
-                    local fuel = GetVehicleFuelLevel(vehicle)
+                    local fuel = Entity(vehicle).state.fuel or GetVehicleFuelLevel(vehicle)
                     local speed = GetEntitySpeed(vehicle)
+                    local is_mph = GetResourceState('qb-vehiclekeys') ~= 'missing'
                     if not is_mph then
-                        speed = speed*3.6
+                        speed = speed * 3.6
                     else
-                        speed = speed*2.236936
+                        speed = speed * 2.236936
                     end
                     local engine = GetVehicleEngineHealth(vehicle) / 10
                     if fuel ~= before.fuel then
@@ -67,11 +84,11 @@ Citizen.CreateThread(function()
                     end
                 end
                 before.speedometer_visible = true
-                SendNUIMessage({status = 'speedometer', data = {visible=true,speed=before.speed,engine=before.engine,fuel=before.fuel,mph=is_mph}})
+                SendNUIMessage({status = 'speedometer', data = {visible = true, speed = before.speed, engine = before.engine, fuel = before.fuel, mph = is_mph}})
             else
                 if before.speedometer_visible then 
                     before.speedometer_visible = false
-                    SendNUIMessage({status = 'speedometer', data = {visible=false}})
+                    SendNUIMessage({status = 'speedometer', data = {visible = false}})
                 end
                 inCar = false
                 wait = 1000
@@ -84,6 +101,7 @@ Citizen.CreateThread(function()
                 local ammoInClip = GetAmmoInClip(player, weaponHash)
                 local maxAmmo = GetMaxAmmoInClip(player, weaponHash, true)
                 local totalAmmo = GetAmmoInPedWeapon(player, weaponHash)
+                
                 before.weapon_visible = true
                 SendNUIMessage({
                     status = 'weapon',
@@ -104,6 +122,7 @@ Citizen.CreateThread(function()
                 end
             end
         end
+        
         ::endLoop::
         Citizen.Wait(wait)
     end
