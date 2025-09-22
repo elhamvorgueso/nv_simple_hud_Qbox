@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
         local jobName = PlayerData.job.name -- Ejemplo: 'unemployed'
         local jobLabel = PlayerData.job.label -- Ejemplo: 'Civilian'
         local jobGrade = PlayerData.job.grade.name -- Ejemplo: 'Freelancer'
-        local onlinePlayers = GetNumberOfPlayers()
+        local onlinePlayers = #GetActivePlayers()
         
         if not food or not water then
             SendNUIMessage({status = 'visible', data = false})
@@ -154,3 +154,23 @@ function GetAmmoInClip(ped, weaponHash)
     local ammoClip = Citizen.InvokeNative(0x2E1202248937775C, ped, weaponHash, Citizen.PointerValueInt())
     return ammoClip
 end
+
+-- Función para mostrar el HUD
+local function ShowHUD()
+    SendNUIMessage({status = 'visible', data = true})
+end
+
+-- Función para ocultar el HUD
+local function HideHUD()
+    SendNUIMessage({status = 'visible', data = false})
+end
+
+-- Exportarlas para que puedan ser llamadas desde otros recursos
+exports('ShowHUD', ShowHUD)
+exports('HideHUD', HideHUD)
+
+--exports['nv_simple_hud']:ShowHUD()
+--TriggerEvent('nv_simple_hud:ShowHUD')
+
+--TriggerEvent('nv_simple_hud:HideHUD')
+--exports['nv_simple_hud']:HideHUD()
