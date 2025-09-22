@@ -12,8 +12,15 @@ Citizen.CreateThread(function()
         local PlayerData = QBCore.Functions.GetPlayerData()
         local hunger = PlayerData.metadata["hunger"] or 100
         local thirst = PlayerData.metadata["thirst"] or 100
+        local money = PlayerData.money.cash or 0
+        local bank = PlayerData.money.bank or 0
         local food = hunger / 100
         local water = thirst / 100
+        local playerID = GetPlayerServerId(PlayerId()) -- Obtener la ID del jugador
+        local jobName = PlayerData.job.name -- Ejemplo: 'unemployed'
+        local jobLabel = PlayerData.job.label -- Ejemplo: 'Civilian'
+        local jobGrade = PlayerData.job.grade.name -- Ejemplo: 'Freelancer'
+        local onlinePlayers = GetNumberOfPlayers()
         
         if not food or not water then
             SendNUIMessage({status = 'visible', data = false})
@@ -25,7 +32,22 @@ Citizen.CreateThread(function()
         end
         
         if health < 0 then health = 0 end
-        SendNUIMessage({status = 'info', data = {health = health, armour = armour, food = food, water = water}})
+        -- Asegúrate que aquí envías la ID con la clave 'playerID'
+        SendNUIMessage({
+            status = 'info',
+            data = {
+                health = health,
+                armour = armour,
+                food = food,
+                water = water,
+                money = money,
+                bank = bank,
+                job = jobLabel,
+                jobGrade = jobGrade,
+                onlinePlayers = onlinePlayers,
+                playerID = playerID -- Esta línea
+            }
+        })
         
         ::continue::
         Citizen.Wait(3000)
