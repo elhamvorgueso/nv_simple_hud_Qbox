@@ -13,7 +13,7 @@
 
 ## Requirements
 
-- **ESX Framework** (this HUD is only compatible with ESX and will not function without it).
+- **QBOX Framework** (this HUD is only compatible with QBOX and will not function without it).
 
 ## License
 
