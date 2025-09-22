@@ -10,45 +10,58 @@ Citizen.CreateThread(function()
         local health = GetEntityHealth(player) - 100
         local armour = GetPedArmour(player)
         local PlayerData = QBCore.Functions.GetPlayerData()
-        local hunger = PlayerData.metadata["hunger"] or 100
-        local thirst = PlayerData.metadata["thirst"] or 100
-        local money = PlayerData.money.cash or 0
-        local bank = PlayerData.money.bank or 0
-        local food = hunger / 100
-        local water = thirst / 100
-        local playerID = GetPlayerServerId(PlayerId()) -- Obtener la ID del jugador
-        local jobName = PlayerData.job.name -- Ejemplo: 'unemployed'
-        local jobLabel = PlayerData.job.label -- Ejemplo: 'Civilian'
-        local jobGrade = PlayerData.job.grade.name -- Ejemplo: 'Freelancer'
+
+        local hunger = 100
+        local thirst = 100
+        local money = 0
+        local bank = 0
+        local jobName = ''
+        local jobLabel = ''
+        local jobGrade = ''
         local onlinePlayers = #GetActivePlayers()
-        
-        if not food or not water then
+
+        -- Verificar si PlayerData y metadata están listos
+        if PlayerData and PlayerData.metadata then
+            hunger = PlayerData.metadata["hunger"] or 100
+            thirst = PlayerData.metadata["thirst"] or 100
+            money = PlayerData.money and PlayerData.money.cash or 0
+            bank = PlayerData.money and PlayerData.money.bank or 0
+            jobName = PlayerData.job and PlayerData.job.name or ''
+            jobLabel = PlayerData.job and PlayerData.job.label or ''
+            jobGrade = PlayerData.job and PlayerData.job.grade and PlayerData.job.grade.name or ''
+        else
+            -- Si no están listos, espera y vuelve a pasar
+            Citizen.Wait(500)
+            goto continue
+        end
+
+        if not (hunger and thirst) then
             SendNUIMessage({status = 'visible', data = false})
             goto continue
         end
-        
+
         if not isReady then
             isReady = true
         end
-        
+
         if health < 0 then health = 0 end
-        -- Asegúrate que aquí envías la ID con la clave 'playerID'
+
         SendNUIMessage({
             status = 'info',
             data = {
                 health = health,
                 armour = armour,
-                food = food,
-                water = water,
+                food = hunger / 100,
+                water = thirst / 100,
                 money = money,
                 bank = bank,
                 job = jobLabel,
                 jobGrade = jobGrade,
                 onlinePlayers = onlinePlayers,
-                playerID = playerID -- Esta línea
+                playerID = GetPlayerServerId(PlayerId())
             }
         })
-        
+
         ::continue::
         Citizen.Wait(3000)
     end
