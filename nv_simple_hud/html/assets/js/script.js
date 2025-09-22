@@ -41,8 +41,8 @@ window.addEventListener('message', (event) => {
 	if (status == "info"){
 		health(data.health.toFixed(0))
 		armour(data.armour.toFixed(0))
-		food(data.food.toFixed(0))
-		water(data.water.toFixed(0))
+		food((data.food * 100).toFixed(0))
+		water((data.water * 100).toFixed(0))
 	}
 	if (status == "visible"){
 		if (data){show_hud()}
